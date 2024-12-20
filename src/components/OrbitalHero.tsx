@@ -7,9 +7,13 @@ const OrbitalHero = () => {
     return Array.from({ length: 200 }, () => ({
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 2 + 1, // 1-3px
-      opacity: Math.random() * 0.5 + 0.3, // 0.3-0.8
+      size: Math.random() * 2 + 1,
+      opacity: Math.random() * 0.5 + 0.3,
       animationDelay: `${Math.random() * 4}s`,
+      // Add random shimmer duration for more variety
+      shimmerDuration: `${(Math.random() * 3 + 2).toFixed(1)}s`,
+      // Random glow size
+      glowSize: Math.random() * 3 + 1,
     }));
   }, []);
 
@@ -20,16 +24,41 @@ const OrbitalHero = () => {
         {stars.map((star, i) => (
           <div
             key={i}
-            className="absolute rounded-full animate-[twinkle_4s_ease-in-out_infinite]"
+            className="absolute animate-[twinkle_4s_ease-in-out_infinite]"
             style={{
               left: `${star.x}%`,
               top: `${star.y}%`,
               width: `${star.size}px`,
               height: `${star.size}px`,
-              backgroundColor: `rgba(255, 255, 255, ${star.opacity})`,
               animationDelay: star.animationDelay,
             }}
-          />
+          >
+            {/* Inner star */}
+            <div
+              className="absolute inset-0 rounded-full bg-white"
+              style={{
+                animation: `shimmer ${star.shimmerDuration} ease-in-out infinite`,
+                opacity: star.opacity,
+              }}
+            />
+            {/* Glow effect */}
+            <div
+              className="absolute rounded-full bg-white/30 blur-[1px]"
+              style={{
+                inset: `-${star.glowSize}px`,
+                animation: `shimmer ${star.shimmerDuration} ease-in-out infinite`,
+                opacity: star.opacity * 0.5,
+              }}
+            />
+            {/* Extra bright center */}
+            <div
+              className="absolute inset-0 rounded-full bg-white"
+              style={{
+                transform: "scale(0.35)",
+                opacity: star.opacity * 1.5,
+              }}
+            />
+          </div>
         ))}
       </div>
 
