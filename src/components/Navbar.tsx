@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ShoppingCart } from "lucide-react";
 
 export default function Navbar() {
   return (
@@ -12,13 +13,25 @@ export default function Navbar() {
         >
           Cosmic Art
         </Link>
-        <div className="space-x-8">
+        <div className="flex items-center space-x-8">
           <Link
             href="/"
             className="text-gray-400 hover:text-white transition-colors duration-300 
                        relative group"
           >
             <span>Home</span>
+            <span
+              className="absolute inset-x-0 -bottom-1 h-px bg-gradient-to-r from-transparent 
+                           via-white to-transparent scale-x-0 group-hover:scale-x-100 
+                           transition-transform duration-300"
+            />
+          </Link>
+          <Link
+            href="/shop"
+            className="text-gray-400 hover:text-white transition-colors duration-300 
+                       relative group"
+          >
+            <span>Shop</span>
             <span
               className="absolute inset-x-0 -bottom-1 h-px bg-gradient-to-r from-transparent 
                            via-white to-transparent scale-x-0 group-hover:scale-x-100 
@@ -36,6 +49,12 @@ export default function Navbar() {
                            via-white to-transparent scale-x-0 group-hover:scale-x-100 
                            transition-transform duration-300"
             />
+          </Link>
+          <Link href="/cart" className="relative group">
+            <ShoppingCart className="w-6 h-6 text-gray-400 group-hover:text-white transition-colors duration-300" />
+            <span className="absolute -top-2 -right-2 bg-purple-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+              0
+            </span>
           </Link>
         </div>
       </div>
