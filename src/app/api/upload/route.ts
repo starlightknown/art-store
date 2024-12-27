@@ -36,6 +36,8 @@ export async function POST(request: Request) {
       folder: "cosmic-art",
     });
 
+    console.log("DisplayIn value:", data.get("displayIn"));
+
     const artwork = await Artwork.create({
       title,
       artist,
@@ -43,7 +45,10 @@ export async function POST(request: Request) {
       category,
       description,
       image: uploadResponse.secure_url,
+      displayIn: [data.get("displayIn") as string],
     });
+
+    console.log("Created artwork:", artwork);
 
     return NextResponse.json({ success: true, artwork });
   } catch (error) {

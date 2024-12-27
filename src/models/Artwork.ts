@@ -10,6 +10,18 @@ const ArtworkSchema = new mongoose.Schema({
   category: { type: String, required: true },
   description: { type: String, required: true },
   featured: { type: Boolean, default: false },
+  displayIn: {
+    type: [String],
+    enum: ["shop", "gallery", "both"],
+    default: ["both"],
+    required: true,
+    validate: {
+      validator: function (v: string[]) {
+        return v && v.length > 0;
+      },
+      message: "displayIn must not be empty",
+    },
+  },
   createdAt: { type: Date, default: Date.now },
 });
 

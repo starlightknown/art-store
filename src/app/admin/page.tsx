@@ -19,6 +19,7 @@ export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [displayIn, setDisplayIn] = useState<string[]>(["both"]);
   const router = useRouter();
   const addArtwork = useArtworkStore((state) => state.addArtwork);
 
@@ -69,6 +70,7 @@ export default function AdminPage() {
       formData.append("price", price);
       formData.append("category", category);
       formData.append("description", description);
+      formData.append("displayIn", displayIn[0]);
 
       const response = await fetch("/api/upload", {
         method: "POST",
@@ -191,6 +193,22 @@ export default function AdminPage() {
                            focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                   required
                 />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Display In
+                </label>
+                <select
+                  value={displayIn[0]}
+                  onChange={(e) => setDisplayIn([e.target.value])}
+                  className="w-full p-2 rounded bg-slate-800 border border-slate-700 
+                           focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  required
+                >
+                  <option value="both">Both Shop & Gallery</option>
+                  <option value="shop">Shop Only</option>
+                  <option value="gallery">Gallery Only</option>
+                </select>
               </div>
             </div>
             <div className="space-y-4">

@@ -1,17 +1,39 @@
 import Image from "next/image";
-import { artworks } from "@/data/artworks";
 import Navbar from "@/components/Navbar";
+import { getArtworks } from "../actions/getArtworks";
 
-export default function Shop() {
+export default async function Shop() {
+  const allArtworks = await getArtworks();
+
+  // Add logging
+  console.log(
+    "All artworks displayIn values:",
+    allArtworks.map((a) => ({ id: a._id, displayIn: a.displayIn }))
+  );
+
+  const shopArtworks = allArtworks.filter((artwork) => {
+    const shouldShow =
+      artwork.displayIn?.includes("shop") ||
+      artwork.displayIn?.includes("both") ||
+      !artwork.displayIn;
+
+    // Add logging
+    console.log(
+      `Artwork ${artwork._id}: displayIn=${artwork.displayIn}, showing=${shouldShow}`
+    );
+
+    return shouldShow;
+  });
+
   return (
     <div className="min-h-screen bg-slate-900 text-white">
       <Navbar />
       <main className="max-w-7xl mx-auto px-4 pt-24 pb-16">
         <h1 className="text-4xl font-bold mb-8">Art Shop</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {artworks.map((artwork) => (
+          {shopArtworks.map((artwork) => (
             <div
-              key={artwork.id}
+              key={artwork._id.toString()}
               className="bg-slate-800 rounded-lg overflow-hidden hover:transform hover:scale-105 transition-transform"
             >
               <div className="relative h-64">
