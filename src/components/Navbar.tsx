@@ -50,6 +50,18 @@ export default function Navbar() {
                            transition-transform duration-300"
             />
           </Link>
+          <Link
+            href="/admin"
+            className="text-gray-400 hover:text-white transition-colors duration-300 
+                       relative group"
+          >
+            <span>Admin</span>
+            <span
+              className="absolute inset-x-0 -bottom-1 h-px bg-gradient-to-r from-transparent 
+                           via-white to-transparent scale-x-0 group-hover:scale-x-100 
+                           transition-transform duration-300"
+            />
+          </Link>
           <Link href="/cart" className="relative group">
             <ShoppingCart className="w-6 h-6 text-gray-400 group-hover:text-white transition-colors duration-300" />
             <span className="absolute -top-2 -right-2 bg-purple-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">

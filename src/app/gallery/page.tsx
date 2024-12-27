@@ -1,8 +1,10 @@
 import Image from "next/image";
-import { artworks } from "@/data/artworks";
 import Navbar from "@/components/Navbar";
+import { getArtworks } from "../actions/getArtworks";
 
-export default function Gallery() {
+export default async function Gallery() {
+  const artworks = await getArtworks();
+
   return (
     <div className="min-h-screen bg-slate-900 text-white">
       <Navbar />
@@ -11,7 +13,7 @@ export default function Gallery() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {artworks.map((artwork) => (
             <div
-              key={artwork.id}
+              key={artwork._id.toString()}
               className="bg-slate-800 rounded-lg overflow-hidden hover:transform hover:scale-105 transition-transform"
             >
               <div className="relative h-64">
