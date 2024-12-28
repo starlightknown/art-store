@@ -1,5 +1,15 @@
 import { create } from "zustand";
-import { Artwork, artworks as initialArtworks } from "@/data/artworks";
+
+export interface Artwork {
+  _id: string;
+  title: string;
+  artist: string;
+  price: number;
+  image: string;
+  category: string;
+  description: string;
+  displayIn: Array<"shop" | "gallery" | "both">;
+}
 
 interface ArtworkStore {
   artworks: Artwork[];
@@ -7,7 +17,7 @@ interface ArtworkStore {
 }
 
 export const useArtworkStore = create<ArtworkStore>((set) => ({
-  artworks: initialArtworks,
+  artworks: [],
   addArtwork: (artwork) =>
     set((state) => ({
       artworks: [...state.artworks, artwork],

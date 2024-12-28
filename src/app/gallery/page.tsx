@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import { getArtworks } from "../actions/getArtworks";
+import { Artwork } from "@/store/artworks";
 
 export default async function Gallery() {
   const allArtworks = await getArtworks();
   const galleryArtworks = allArtworks.filter(
-    (artwork) =>
+    (artwork: Artwork) =>
       artwork.displayIn?.includes("gallery") ||
       artwork.displayIn?.includes("both") ||
       !artwork.displayIn
