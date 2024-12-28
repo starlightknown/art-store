@@ -5,22 +5,11 @@ import { getArtworks } from "../actions/getArtworks";
 export default async function Shop() {
   const allArtworks = await getArtworks();
 
-  // Add logging
-  console.log(
-    "All artworks displayIn values:",
-    allArtworks.map((a) => ({ id: a._id, displayIn: a.displayIn }))
-  );
-
   const shopArtworks = allArtworks.filter((artwork) => {
     const shouldShow =
       artwork.displayIn?.includes("shop") ||
       artwork.displayIn?.includes("both") ||
       !artwork.displayIn;
-
-    // Add logging
-    console.log(
-      `Artwork ${artwork._id}: displayIn=${artwork.displayIn}, showing=${shouldShow}`
-    );
 
     return shouldShow;
   });

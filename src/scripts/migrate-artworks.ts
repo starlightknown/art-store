@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
 async function migrateArtworks() {
   try {
@@ -7,26 +8,6 @@ async function migrateArtworks() {
     }
 
     await mongoose.connect(process.env.MONGODB_URI);
-    console.log("Connected to MongoDB");
-
-    const Artwork = mongoose.model(
-      "Artwork",
-      new mongoose.Schema({
-        displayIn: {
-          type: [String],
-          enum: ["shop", "gallery", "both"],
-          default: ["both"],
-          required: true,
-        },
-      })
-    );
-
-    const result = await Artwork.updateMany(
-      { displayIn: { $exists: false } },
-      { $set: { displayIn: ["both"] } }
-    );
-
-    console.log(`Updated ${result.modifiedCount} artworks`);
     process.exit(0);
   } catch (error) {
     console.error("Migration failed:", error);
@@ -35,6 +16,6 @@ async function migrateArtworks() {
 }
 
 // Load environment variables
-require("dotenv").config({ path: ".env.local" });
+dotenv.config({ path: ".env.local" });
 
 migrateArtworks();
