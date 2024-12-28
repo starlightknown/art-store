@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import { getArtworks } from "../actions/getArtworks";
+import { Artwork } from "@/store/artworks";
 
 export default async function Shop() {
   const allArtworks = await getArtworks();
 
-  const shopArtworks = allArtworks.filter((artwork) => {
+  const shopArtworks = allArtworks.filter((artwork: Artwork) => {
     const shouldShow =
       artwork.displayIn?.includes("shop") ||
       artwork.displayIn?.includes("both") ||
@@ -20,7 +21,7 @@ export default async function Shop() {
       <main className="max-w-7xl mx-auto px-4 pt-24 pb-16">
         <h1 className="text-4xl font-bold mb-8">Art Shop</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {shopArtworks.map((artwork) => (
+          {shopArtworks.map((artwork: Artwork) => (
             <div
               key={artwork._id.toString()}
               className="bg-slate-800 rounded-lg overflow-hidden hover:transform hover:scale-105 transition-transform"
