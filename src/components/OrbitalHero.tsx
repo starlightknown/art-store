@@ -88,11 +88,31 @@ const OrbitalHero = () => {
         <div className="absolute w-full h-full rounded-full border-2 border-white/10 animate-[spin_20s_linear_infinite]">
           {/* Moon */}
           <div className="absolute -top-6 left-1/2 w-12 h-12 -translate-x-1/2">
-            <div className="w-full h-full rounded-full bg-gradient-to-br from-gray-200 to-gray-400 border-2 border-white/20 shadow-[0_0_40px_rgba(255,255,255,0.3)]">
-              {/* Craters */}
-              <div className="absolute w-2 h-2 bg-gray-600/30 rounded-full top-2 left-2" />
-              <div className="absolute w-3 h-3 bg-gray-600/30 rounded-full bottom-3 right-2" />
-              <div className="absolute w-2 h-2 bg-gray-600/30 rounded-full top-4 right-3" />
+            {/* Cat head */}
+            <div className="relative w-full h-full">
+              {/* Main face */}
+              <div className="absolute w-full h-full rounded-[40%] bg-gradient-to-b from-orange-200 to-orange-300">
+                {/* Ears - made larger and more triangular */}
+                <div className="absolute -top-4 -left-1.5 w-4 h-7 bg-orange-200 rotate-[-20deg] rounded-[70%_70%_0_0]" />
+                <div className="absolute -top-4 -right-1.5 w-4 h-7 bg-orange-200 rotate-[20deg] rounded-[70%_70%_0_0]" />
+                {/* Inner ears - adjusted to match */}
+                <div className="absolute -top-3 -left-1 w-3 h-4 bg-pink-400 rotate-[-20deg] rounded-[70%_70%_0_0]" />
+                <div className="absolute -top-3 -right-1 w-3 h-4 bg-pink-400 rotate-[20deg] rounded-[70%_70%_0_0]" />
+                {/* Eyes - made more almond-shaped */}
+                <div className="absolute w-3 h-2 bg-white rounded-full top-4 left-2.5 rotate-[15deg]">
+                  <div className="absolute w-1.5 h-1.5 bg-gray-800 rounded-full top-0.5 right-0.5" />
+                </div>
+                <div className="absolute w-3 h-2 bg-white rounded-full top-4 right-2.5 -rotate-[15deg]">
+                  <div className="absolute w-1.5 h-1.5 bg-gray-800 rounded-full top-0.5 left-0.5" />
+                </div>
+                {/* Nose - made smaller and more triangular */}
+                <div className="absolute w-2 h-1 bg-pink-700 rounded-[30%] top-[48%] left-1/2 -translate-x-1/2" />
+                {/* Whiskers - made longer */}
+                <div className="absolute top-[52%] left-0 w-4 h-[1px] bg-gray-400 rotate-[15deg]" />
+                <div className="absolute top-[56%] left-0 w-4 h-[1px] bg-gray-400 rotate-[5deg]" />
+                <div className="absolute top-[52%] right-0 w-4 h-[1px] bg-gray-400 rotate-[-15deg]" />
+                <div className="absolute top-[56%] right-0 w-4 h-[1px] bg-gray-400 rotate-[-5deg]" />
+              </div>
             </div>
           </div>
         </div>
