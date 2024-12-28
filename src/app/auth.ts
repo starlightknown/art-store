@@ -34,7 +34,10 @@ export const authConfig = {
     },
     async session({ session, token }) {
       if (session?.user) {
-        session.user.role = (token as Token).role;
+        session.user.role = (token as Token).role as
+          | "admin"
+          | "user"
+          | undefined;
       }
       return session;
     },

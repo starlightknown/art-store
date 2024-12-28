@@ -8,7 +8,7 @@ export default async function Gallery() {
     (artwork) =>
       artwork.displayIn?.includes("gallery") ||
       artwork.displayIn?.includes("both") ||
-      !artwork.displayIn // fallback for existing artworks
+      !artwork.displayIn
   );
 
   return (
@@ -32,18 +32,8 @@ export default async function Gallery() {
               </div>
               <div className="p-4">
                 <h3 className="text-xl font-semibold mb-2">{artwork.title}</h3>
-                <p className="text-gray-400 mb-4">By {artwork.artist}</p>
-                <p className="text-sm text-gray-400 mb-4">
-                  {artwork.description}
-                </p>
-                <div className="flex justify-between items-center">
-                  <span className="text-purple-400 font-bold">
-                    ${artwork.price}
-                  </span>
-                  <button className="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-full">
-                    Add to Cart
-                  </button>
-                </div>
+                <p className="text-gray-400 mb-2">By {artwork.artist}</p>
+                <p className="text-sm text-gray-400">{artwork.description}</p>
               </div>
             </div>
           ))}
