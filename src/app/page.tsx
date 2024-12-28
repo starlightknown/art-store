@@ -10,42 +10,41 @@ export default function Home() {
       </ClientOnly>
       <div className="relative z-10">
         <Navbar />
-        {/* Hero Section */}
         <header className="h-[calc(100vh-64px)] flex items-center justify-center px-4">
-          <div className="text-center space-y-6">
-            <h1 className="text-6xl md:text-8xl font-bold mb-4 relative">
+          <div
+            className="text-center space-y-8 bg-gradient-to-b from-slate-950/50 via-slate-900/25 to-transparent 
+                         px-12 py-16 rounded-3xl border border-white/10 shadow-2xl"
+          >
+            <h1 className="text-6xl md:text-7xl font-bold mb-4 relative">
               <span
-                className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 
-                          bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]
-                          tracking-tight"
+                className="bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 
+                          bg-clip-text text-transparent [text-shadow:_0_0_45px_rgba(99,102,241,0.5)]
+                          tracking-tight leading-tight"
               >
-                Orbiting stArt
+                ✦ Orbiting stArt ✦
               </span>
-              <br />
               <div
-                className="absolute -inset-x-8 -inset-y-4 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 
-                          blur-3xl -z-10 rounded-full opacity-70"
+                className="absolute -inset-x-8 -inset-y-4 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 
+                          blur-3xl -z-10 rounded-full opacity-70 animate-pulse"
               />
             </h1>
             <p
-              className="text-2xl md:text-3xl font-light tracking-wider text-blue-100/90 
-                        drop-shadow-[0_4px_15px_rgba(0,0,0,0.9)]"
+              className="text-xl md:text-2xl font-light tracking-wide text-white 
+                        [text-shadow:_2px_2px_10px_rgba(0,0,0,0.5)] max-w-2xl mx-auto"
             >
               Where Art Meets the{" "}
               <span
-                className="font-semibold bg-gradient-to-r from-cyan-200 via-pink-200 to-violet-200 
-                          bg-clip-text text-transparent tracking-wide
-                          [text-shadow:_0_0_2px_rgba(255,255,255,0.5)]"
+                className="font-medium bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 
+                          bg-clip-text text-transparent [text-shadow:_2px_2px_10px_rgba(255,255,255,0.3)]"
               >
                 Infinite Cosmos
               </span>
-              <br />- by{" "}
-              <span
-                className="font-semibold bg-gradient-to-r from-cyan-200 via-pink-200 to-violet-200 
-                          bg-clip-text text-transparent tracking-wide
-                          [text-shadow:_0_0_2px_rgba(255,255,255,0.5)]"
-              >
-                Karuna
+              <br />
+              <span className="text-base text-white [text-shadow:_2px_2px_10px_rgba(0,0,0,0.5)]">
+                - by{" "}
+                <span className="font-medium text-purple-200 [text-shadow:_0_0_20px_rgba(216,180,254,0.5)]">
+                  Karuna ✦
+                </span>
               </span>
             </p>
           </div>
