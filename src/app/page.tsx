@@ -19,16 +19,9 @@ export default function Home() {
                           bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]
                           tracking-tight"
               >
-                Cosmic Art
+                Orbiting stArt
               </span>
               <br />
-              <span
-                className="bg-gradient-to-r from-purple-400 via-fuchsia-500 to-pink-500 
-                          bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(192,132,252,0.5)]
-                          tracking-tight"
-              >
-                Gallery
-              </span>
               <div
                 className="absolute -inset-x-8 -inset-y-4 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 
                           blur-3xl -z-10 rounded-full opacity-70"
@@ -40,10 +33,19 @@ export default function Home() {
             >
               Where Art Meets the{" "}
               <span
-                className="font-medium bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 
-                          bg-clip-text text-transparent tracking-wide"
+                className="font-semibold bg-gradient-to-r from-cyan-200 via-pink-200 to-violet-200 
+                          bg-clip-text text-transparent tracking-wide
+                          [text-shadow:_0_0_2px_rgba(255,255,255,0.5)]"
               >
                 Infinite Cosmos
+              </span>
+              <br />- by{" "}
+              <span
+                className="font-semibold bg-gradient-to-r from-cyan-200 via-pink-200 to-violet-200 
+                          bg-clip-text text-transparent tracking-wide
+                          [text-shadow:_0_0_2px_rgba(255,255,255,0.5)]"
+              >
+                Karuna
               </span>
             </p>
           </div>

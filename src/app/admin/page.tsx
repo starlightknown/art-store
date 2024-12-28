@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
 import { useArtworkStore } from "@/store/artworks";
@@ -12,7 +11,6 @@ export default function AdminPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const [title, setTitle] = useState("");
   const [artist, setArtist] = useState("");
   const [price, setPrice] = useState("");
@@ -20,12 +18,16 @@ export default function AdminPage() {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>("");
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
   const [displayIn, setDisplayIn] = useState<string[]>(["both"]);
   const addArtwork = useArtworkStore((state) => state.addArtwork);
+
+  useEffect(() => {
+    if (status === "loading") return;
+
+    if (!session || session.user.role !== "admin") {
+      router.push("/auth/login");
+    }
+  }, [session, status, router]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -39,30 +41,9 @@ export default function AdminPage() {
     }
   };
 
-  const handleAuth = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.email || !formData.password) {
-      setError("Email and password are required");
-      return;
-    }
-
-    const result = await signIn("credentials", {
-      email: formData.email,
-      password: formData.password,
-      redirect: false,
-    });
-
-    if (result?.error) {
-      setError("Invalid credentials");
-    } else {
-      setError("");
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setError("");
 
     try {
       const formData = new FormData();
@@ -101,19 +82,19 @@ export default function AdminPage() {
       // Redirect to gallery
       router.push("/gallery");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      console.error("Error uploading artwork:", err);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Redirect non-admin users
+  // Show loading state while checking session
   if (status === "loading") {
     return <div>Loading...</div>;
   }
 
+  // Don't render the admin content if not authenticated
   if (!session || session.user.role !== "admin") {
-    router.push("/auth/login");
     return null;
   }
 

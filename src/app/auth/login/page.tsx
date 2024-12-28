@@ -32,7 +32,7 @@ export default function LoginPage() {
         router.push("/");
         router.refresh();
       }
-    } catch (error) {
+    } catch {
       setError("An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
@@ -85,7 +85,7 @@ export default function LoginPage() {
           </button>
         </form>
         <p className="mt-4 text-center text-gray-400">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link
             href="/auth/register"
             className="text-purple-400 hover:text-purple-300"

@@ -18,7 +18,7 @@ export default function Navbar() {
                      bg-clip-text text-transparent hover:from-blue-300 hover:to-pink-300 
                      transition-colors duration-300"
         >
-          Cosmic Art
+          Orbiting stArt
         </Link>
         <div className="flex items-center space-x-8">
           <Link
