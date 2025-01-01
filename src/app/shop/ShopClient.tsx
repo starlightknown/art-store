@@ -30,7 +30,7 @@ export default function ShopClient({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {artworks.map((artwork) => (
             <div
-              key={artwork._id.toString()}
+              key={artwork._id}
               className="group relative bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700/50
                         hover:border-purple-500/50 transition-all duration-300 shadow-lg hover:shadow-purple-500/10"
             >

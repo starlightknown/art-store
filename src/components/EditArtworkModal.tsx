@@ -45,7 +45,9 @@ export default function EditArtworkModal({
       onUpdate(updatedArtwork);
       toast.success("Artwork updated successfully");
     } catch (error) {
-      toast.error("Failed to update artwork");
+      toast.error(
+        error instanceof Error ? error.message : "Failed to update artwork"
+      );
     } finally {
       setIsLoading(false);
     }

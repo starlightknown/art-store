@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 import { auth } from "@/app/auth";
+import { Artwork } from "@/models/Artwork";
 
 if (!process.env.RESEND_API_KEY) {
   throw new Error("Missing RESEND_API_KEY environment variable");
@@ -43,7 +44,7 @@ export async function POST(request: Request) {
         <ul>
           ${items
             .map(
-              (item) =>
+              (item: Artwork) =>
                 `<li>${item.title} by ${item.artist} - $${item.price}</li>`
             )
             .join("")}
@@ -70,7 +71,7 @@ export async function POST(request: Request) {
           <ul style="list-style: none; padding: 0;">
             ${items
               .map(
-                (item) => `
+                (item: Artwork) => `
               <li style="margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 5px;">
                 <p style="margin: 5px 0;"><strong>${item.title}</strong> by ${item.artist}</p>
                 <p style="margin: 5px 0; color: #6b46c1;">$${item.price}</p>
@@ -88,8 +89,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({
       success: true,
-      customerEmailId: customerEmail.id,
-      adminEmailId: adminEmail.id,
+      customerEmailId: customerEmail.data?.id,
+      adminEmailId: adminEmail.data?.id,
     });
   } catch (error) {
     console.error("Failed to send email:", error);

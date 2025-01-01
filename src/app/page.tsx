@@ -1,6 +1,12 @@
 import OrbitalHero from "@/components/OrbitalHero";
 import Navbar from "@/components/Navbar";
 import ClientOnly from "@/components/ClientOnly";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Orbiting stArt | Home",
+  description: "Find your perfect piece of the cosmos",
+};
 
 export default function Home() {
   return (

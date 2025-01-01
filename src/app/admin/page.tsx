@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import { Pencil, Trash2 } from "lucide-react";
 import { toast } from "react-hot-toast";
 import EditArtworkModal from "@/components/EditArtworkModal";
+import { Artwork } from "@/models/Artwork";
 
 export default function AdminPage() {
   const { data: session, status } = useSession();
@@ -117,7 +118,8 @@ export default function AdminPage() {
       } else {
         throw new Error("Failed to delete artwork");
       }
-    } catch (error) {
+    } catch (err) {
+      console.error("Error deleting artwork:", err);
       toast.error("Failed to delete artwork");
     }
   };

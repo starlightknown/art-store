@@ -2,6 +2,12 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import { getArtworks } from "../actions/getArtworks";
 import { Artwork } from "@/store/artworks";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Orbiting stArt | Gallery",
+  description: "Explore our cosmic art gallery",
+};
 
 export default async function Gallery() {
   const allArtworks = await getArtworks();
