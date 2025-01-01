@@ -6,6 +6,9 @@ import Image from "next/image";
 import { useArtworkStore } from "@/store/artworks";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { Pencil, Trash2 } from "lucide-react";
+import { toast } from "react-hot-toast";
+import EditArtworkModal from "@/components/EditArtworkModal";
 
 export default function AdminPage() {
   const { data: session, status } = useSession();
@@ -20,6 +23,8 @@ export default function AdminPage() {
   const [preview, setPreview] = useState<string>("");
   const [displayIn, setDisplayIn] = useState<string[]>(["both"]);
   const addArtwork = useArtworkStore((state) => state.addArtwork);
+  const [artworks, setArtworks] = useState<Artwork[]>([]);
+  const [editingArtwork, setEditingArtwork] = useState<Artwork | null>(null);
 
   useEffect(() => {
     if (status === "loading") return;
@@ -28,6 +33,16 @@ export default function AdminPage() {
       router.push("/auth/login");
     }
   }, [session, status, router]);
+
+  // Fetch artworks
+  useEffect(() => {
+    const fetchArtworks = async () => {
+      const response = await fetch("/api/artworks");
+      const data = await response.json();
+      setArtworks(data);
+    };
+    fetchArtworks();
+  }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -88,6 +103,25 @@ export default function AdminPage() {
     }
   };
 
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this artwork?")) return;
+
+    try {
+      const response = await fetch(`/api/artworks/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        setArtworks(artworks.filter((artwork) => artwork._id !== id));
+        toast.success("Artwork deleted successfully");
+      } else {
+        throw new Error("Failed to delete artwork");
+      }
+    } catch (error) {
+      toast.error("Failed to delete artwork");
+    }
+  };
+
   // Show loading state while checking session
   if (status === "loading") {
     return <div>Loading...</div>;
@@ -101,8 +135,10 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-slate-900 text-white">
       <Navbar />
-      <main className="max-w-4xl mx-auto px-4 pt-24 pb-16">
-        <h1 className="text-3xl font-bold mb-8">Upload Artwork</h1>
+      <main className="max-w-7xl mx-auto px-4 pt-24 pb-16">
+        <h1 className="text-4xl font-bold mb-8">Admin Dashboard ✦</h1>
+
+        {/* Upload Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
@@ -216,6 +252,69 @@ export default function AdminPage() {
             {isLoading ? "Uploading..." : "Upload Artwork"}
           </button>
         </form>
+
+        {/* Artworks List */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold mb-4">Manage Artworks</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {artworks.map((artwork) => (
+              <div
+                key={artwork._id}
+                className="bg-slate-800 rounded-lg overflow-hidden border border-slate-700"
+              >
+                <div className="relative h-48">
+                  <Image
+                    src={artwork.image}
+                    alt={artwork.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="text-xl font-semibold mb-2">
+                    {artwork.title}
+                  </h3>
+                  <p className="text-slate-400 mb-4">By {artwork.artist}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-purple-300 font-bold">
+                      ${artwork.price}
+                    </span>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setEditingArtwork(artwork)}
+                        className="p-2 text-blue-400 hover:text-blue-300 transition-colors"
+                      >
+                        <Pencil size={18} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(artwork._id)}
+                        className="p-2 text-red-400 hover:text-red-300 transition-colors"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Edit Modal */}
+        {editingArtwork && (
+          <EditArtworkModal
+            artwork={editingArtwork}
+            onClose={() => setEditingArtwork(null)}
+            onUpdate={(updatedArtwork) => {
+              setArtworks(
+                artworks.map((a) =>
+                  a._id === updatedArtwork._id ? updatedArtwork : a
+                )
+              );
+              setEditingArtwork(null);
+            }}
+          />
+        )}
       </main>
     </div>
   );

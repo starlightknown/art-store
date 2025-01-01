@@ -3,6 +3,7 @@ import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { auth } from "./auth";
 import AuthProvider from "../components/AuthProvider";
+import { Toaster } from "react-hot-toast";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -24,7 +25,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={spaceGrotesk.className}>
-        <AuthProvider session={session}>{children}</AuthProvider>
+        <AuthProvider session={session}>
+          {children}
+          <Toaster position="bottom-right" />
+        </AuthProvider>
       </body>
     </html>
   );

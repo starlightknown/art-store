@@ -1,6 +1,6 @@
 "use server";
 
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 
 const ArtworkSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -27,3 +27,15 @@ const ArtworkSchema = new mongoose.Schema({
 
 export const Artwork =
   mongoose.models?.Artwork || mongoose.model("Artwork", ArtworkSchema);
+
+export interface Artwork extends Document {
+  _id: string;
+  title: string;
+  artist: string;
+  price: number;
+  image: string;
+  category: string;
+  description: string;
+  displayIn?: string[];
+  createdAt?: Date;
+}

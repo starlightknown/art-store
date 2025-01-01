@@ -4,10 +4,12 @@ import Link from "next/link";
 import { ShoppingCart, User } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { useState } from "react";
+import { useCartStore } from "@/store/cart";
 
 export default function Navbar() {
   const { data: session } = useSession();
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const cartItems = useCartStore((state) => state.items);
 
   return (
     <nav className="bg-slate-900/95 backdrop-blur-md border-b border-slate-700/50 fixed w-full z-50 shadow-lg">
@@ -99,7 +101,7 @@ export default function Navbar() {
               >
                 <ShoppingCart className="w-5 h-5 text-slate-200 hover:text-white transition-colors duration-300" />
                 <span className="absolute -top-1 -right-1 bg-purple-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                  0
+                  {cartItems.length}
                 </span>
               </Link>
             </>
