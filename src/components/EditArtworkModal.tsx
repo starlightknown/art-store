@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Artwork } from "@/models/Artwork";
 import { toast } from "react-hot-toast";
 import { X } from "lucide-react";
+import { updateArtwork } from "@/app/actions/artworkActions";
 
 interface Props {
   artwork: Artwork;
@@ -31,18 +32,8 @@ export default function EditArtworkModal({
     setIsLoading(true);
 
     try {
-      const response = await fetch(`/api/artworks/${artwork._id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) throw new Error("Failed to update artwork");
-
-      const updatedArtwork = await response.json();
-      onUpdate(updatedArtwork);
+      const result = await updateArtwork(artwork._id, formData);
+      onUpdate(result.artwork);
       toast.success("Artwork updated successfully");
     } catch (error) {
       toast.error(

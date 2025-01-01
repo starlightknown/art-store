@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useCartStore } from "@/store/cart";
 import { useSession } from "next-auth/react";
 import { toast } from "react-hot-toast";
+import { sendOrderEmail } from "../actions/orderActions";
 
 export default function Cart() {
   const { data: session } = useSession();
@@ -23,26 +24,16 @@ export default function Cart() {
         return;
       }
 
-      const response = await fetch("/api/send-order-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          items,
-          total,
-        }),
-      });
+      const result = await sendOrderEmail(items, total);
 
-      if (!response.ok) {
-        throw new Error("Failed to send confirmation email");
+      if (result.success) {
+        setShowConfirmation(true);
+        clearCart();
       }
-
-      setShowConfirmation(true);
-      clearCart();
     } catch (error) {
-      console.error("Error:", error);
-      toast.error("Failed to process order. Please try again.");
+      toast.error(
+        error instanceof Error ? error.message : "Failed to process order"
+      );
     } finally {
       setIsProcessing(false);
     }

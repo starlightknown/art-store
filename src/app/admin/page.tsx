@@ -10,6 +10,11 @@ import { Pencil, Trash2 } from "lucide-react";
 import { toast } from "react-hot-toast";
 import EditArtworkModal from "@/components/EditArtworkModal";
 import { Artwork } from "@/models/Artwork";
+import {
+  deleteArtwork,
+  createArtwork,
+  getArtworks,
+} from "@/app/actions/artworkActions";
 
 export default function AdminPage() {
   const { data: session, status } = useSession();
@@ -38,9 +43,14 @@ export default function AdminPage() {
   // Fetch artworks
   useEffect(() => {
     const fetchArtworks = async () => {
-      const response = await fetch("/api/artworks");
-      const data = await response.json();
-      setArtworks(data);
+      try {
+        const data = await getArtworks();
+        setArtworks(data);
+      } catch (error) {
+        toast.error(
+          error instanceof Error ? error.message : "Failed to fetch artworks"
+        );
+      }
     };
     fetchArtworks();
   }, []);
@@ -73,18 +83,8 @@ export default function AdminPage() {
       formData.append("description", description);
       formData.append("displayIn", displayIn[0]);
 
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Upload failed");
-      }
-
-      addArtwork(data.artwork);
+      const result = await createArtwork(formData);
+      addArtwork(result.artwork);
 
       // Clear form
       setTitle("");
@@ -95,32 +95,26 @@ export default function AdminPage() {
       setImage(null);
       setPreview("");
 
-      // Redirect to gallery
+      toast.success("Artwork created successfully");
       router.push("/gallery");
-    } catch (err) {
-      console.error("Error uploading artwork:", err);
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Failed to create artwork"
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this artwork?")) return;
-
     try {
-      const response = await fetch(`/api/artworks/${id}`, {
-        method: "DELETE",
-      });
-
-      if (response.ok) {
-        setArtworks(artworks.filter((artwork) => artwork._id !== id));
-        toast.success("Artwork deleted successfully");
-      } else {
-        throw new Error("Failed to delete artwork");
-      }
-    } catch (err) {
-      console.error("Error deleting artwork:", err);
-      toast.error("Failed to delete artwork");
+      await deleteArtwork(id);
+      setArtworks(artworks.filter((a) => a._id !== id));
+      toast.success("Artwork deleted successfully");
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Failed to delete artwork"
+      );
     }
   };
 

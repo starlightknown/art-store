@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import ShopClient from "./ShopClient";
-import { getArtworks } from "../actions/getArtworks";
+import { getArtworks } from "../actions/artworkActions";
 import Loading from "./loading";
 import { Artwork } from "@/models/Artwork";
 import type { Metadata } from "next";

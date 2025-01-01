@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
-import { getArtworks } from "../actions/getArtworks";
+import { getArtworks } from "../actions/artworkActions";
 import { Artwork } from "@/store/artworks";
 import type { Metadata } from "next";
 
